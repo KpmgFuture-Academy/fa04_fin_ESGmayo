@@ -1,5 +1,4 @@
 function loadDashboard() {
-    // 대시보드 데이터를 동적으로 로드하는 예시 (API 연동 가능성 시뮬레이션)
     const dashboardContent = document.getElementById('dashboard-content');
     dashboardContent.innerHTML = `
         <p><strong>통합 리스크:</strong> 재무, ESG, 기업, 산업 데이터 분석 결과</p>
@@ -9,7 +8,32 @@ function loadDashboard() {
     alert('대시보드가 새로고침되었습니다!');
 }
 
-// 페이지 로드 시 기본 데이터 표시
+function uploadFile() {
+    const fileInput = document.getElementById('csvFile');
+    const file = fileInput.files[0];
+    const resultDiv = document.getElementById('analysis-result');
+
+    if (!file) {
+        alert('CSV 파일을 선택해주세요!');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/analyze', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        resultDiv.innerHTML = `<p><strong>분석 결과:</strong> ${data.message}</p>`;
+    })
+    .catch(error => {
+        resultDiv.innerHTML = `<p>오류 발생: ${error.message}</p>`;
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboard();
 });
