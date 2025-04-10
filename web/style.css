@@ -70,3 +70,24 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+/* 기존 스타일 유지 */
+#upload {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#upload input[type="file"] {
+    margin: 10px 0;
+}
+
+#analysis-result {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
