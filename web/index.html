@@ -18,18 +18,13 @@
         <p>재무, ESG, 기업 정보, 산업 데이터를 투명하고 종합적으로 비교 분석하여 투자 의사결정을 지원합니다.</p>
     </section>
 
-    <section id="components">
-        <h3>주요 구성 요소</h3>
-        <ul>
-            <li>재무 정보</li>
-            <li>ESG 평가지표/보도자료</li>
-            <li>기업 정보</li>
-            <li>산업 정보</li>
-            <li>통합 리스크 분석</li>
-            <li>유사기업 비교</li>
-            <li>판단 보조 모듈</li>
-            <li>통합 대시보드</li>
-        </ul>
+    <section id="upload">
+        <h3>CSV 파일 업로드 및 분석</h3>
+        <input type="file" id="csvFile" accept=".csv">
+        <button onclick="uploadFile()">분석 시작</button>
+        <div id="analysis-result">
+            <p>분석 결과가 여기에 표시됩니다.</p>
+        </div>
     </section>
 
     <section id="dashboard">
