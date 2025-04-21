@@ -67,54 +67,52 @@
   </style>
 
   <!-- ✅ Firebase SDK 모듈 방식 -->
-  <!-- ✅ Firestore에 사용자 정보 저장 구조 요약 -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-  // 🔐 Firebase 설정
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "SENDER_ID",
-    appId: "APP_ID"
-  };
-
-  // ✅ Firebase 초기화 & Firestore 연결
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // 👤 사용자 ID 생성기 (랜덤)
-  function generateUserId() {
-    return 'user_' + Math.random().toString(36).substr(2, 9);
-  }
-
-  // 💾 Firestore에 사용자 정보 저장
-  async function saveUserInfo() {
-    const userId = generateUserId();
-    const userData = {
-      timestamp: new Date().toISOString(),
-      page: window.location.href,
-      device: navigator.userAgent,
-      referrer: document.referrer
+    // 🔐 Firebase 설정 (실제 프로젝트 정보로 바꿔주세요!)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBN96xxxxxxx",
+      authDomain: "esgmayo-34ad9.firebaseapp.com",
+      projectId: "esgmayo-34ad9",
+      storageBucket: "esgmayo-34ad9.appspot.com",
+      messagingSenderId: "965037628249",
+      appId: "1:965037628249:web:abc123456def7890"
     };
 
-    try {
-      await setDoc(doc(db, "users", userId), userData);
-      console.log("✅ 사용자 정보 저장 성공:", userData);
-    } catch (e) {
-      console.error("❌ 저장 실패:", e);
+    // ✅ Firebase 초기화 & Firestore 연결
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 👤 사용자 ID 생성기
+    function generateUserId() {
+      return 'user_' + Math.random().toString(36).substring(2, 10);
     }
-  }
 
-  // 🚀 페이지 로드 시 정보 저장
-  window.addEventListener("load", () => {
-    saveUserInfo();
-  });
-</script>
+    // 💾 Firestore에 사용자 정보 저장
+    async function saveUserInfo() {
+      const userId = generateUserId();
+      const userData = {
+        timestamp: new Date().toISOString(),
+        page: window.location.href,
+        device: navigator.userAgent,
+        referrer: document.referrer
+      };
 
+      try {
+        await setDoc(doc(db, "users", userId), userData);
+        console.log("✅ 사용자 정보 저장 성공:", userData);
+      } catch (error) {
+        console.error("❌ 저장 실패:", error);
+      }
+    }
+
+    // 🚀 페이지 로드시 저장
+    window.addEventListener("load", () => {
+      saveUserInfo();
+    });
+  </script>
 </head>
 <body>
 
