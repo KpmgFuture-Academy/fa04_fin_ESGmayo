@@ -1,70 +1,61 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firebase Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Firestore 사용자 추적</title>
 
-  <!-- Firebase SDK 추가 -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-  
-  <script>
-    // Firebase 설정 (Firebase Console에서 제공하는 설정 값을 복사해 넣기)
+  <!-- Firebase SDK (v9 Modular 방식) -->
+  <script type="module">
+    // Firebase SDK 모듈 가져오기
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    // Firebase 설정 (복사하신 정보 사용)
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyBN965sQRm-wSAKpewEQIYSabo_C4iFMak",
+      authDomain: "esgmayo-34ad9.firebaseapp.com",
+      projectId: "esgmayo-34ad9",
+      storageBucket: "esgmayo-34ad9.appspot.com",
+      messagingSenderId: "965037628249",
+      appId: "1:965037628249:web:2684a1fec4fa8b0009ca48"
     };
 
     // Firebase 초기화
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database(); // Firebase 실시간 데이터베이스 참조
-  </script>
-</head>
-<body>
-  <h1>Firebase와 연결된 웹사이트</h1>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  <script>
-    // 고유 사용자 ID 생성 (랜덤 문자열)
-    function getUniqueUserId() {
+    // 고유 사용자 ID 생성
+    function generateUserId() {
       return 'user_' + Math.random().toString(36).substr(2, 9);
     }
 
-    // Firebase에 사용자 데이터 저장
-    function saveUserData(userId, data) {
-      const userRef = database.ref('users/' + userId);
-      userRef.set({
-        timestamp: new Date().toISOString(), // 방문 시간
-        ...data
-      })
-      .then(() => {
-        console.log('User data saved successfully');
-      })
-      .catch((error) => {
-        console.error('Error saving user data:', error);
-      });
-    }
-
-    // 웹사이트 방문 시 사용자 데이터 추적 및 저장
-    window.onload = function() {
-      const userId = getUniqueUserId(); // 고유 사용자 ID 생성
-
-      // 사용자 데이터 추적
+    // 사용자 정보 저장
+    async function saveUserInfo() {
+      const userId = generateUserId();
       const userData = {
-        page: window.location.href, // 현재 방문한 페이지 URL
-        device: navigator.userAgent, // 사용자의 디바이스 정보 (예: 브라우저, OS)
-        referrer: document.referrer // 이전 페이지(참조자) 정보
+        timestamp: new Date().toISOString(),
+        page: window.location.href,
+        device: navigator.userAgent,
+        referrer: document.referrer
       };
 
-      // Firebase에 사용자 데이터 저장
-      saveUserData(userId, userData);
-    };
+      try {
+        await setDoc(doc(db, "users", userId), userData);
+        console.log("✅ 사용자 정보 저장 성공:", userData);
+      } catch (e) {
+        console.error("❌ 저장 실패:", e);
+      }
+    }
+
+    // 페이지 로드 후 실행
+    window.addEventListener("load", () => {
+      saveUserInfo();
+    });
   </script>
-  <script src="firebaseConfig.js"></script>
+</head>
+<body>
+  <h1>🔥 Firestore 사용자 추적</h1>
+  <p>이 페이지에 들어오면 자동으로 Firestore에 사용자 정보가 저장됩니다.</p>
 </body>
 </html>
