@@ -88,3 +88,18 @@ def preprocessing(df, hogi, multi_encoding):
         raise ValueError("multi_encoding은 True 또는 False여야 합니다.")
 
     return train, val, test
+
+import torch
+class SlidingWindowDataset(torch.utils.data.Dataset):
+    def __init__(self, df, features, target, window_size):
+        self.x = df[features].values.astype('float32')
+        self.y = df[target].values.astype('float32')
+        self.window_size = window_size
+
+    def __len__(self):
+        return len(self.x) - self.window_size + 1
+
+    def __getitem__(self, idx):
+        x_window = self.x[idx : idx + self.window_size]       # 0~3행
+        y_target = self.y[idx + self.window_size - 1]         # 3행 (동일 종료점)
+        return torch.tensor(x_window), torch.tensor([y_target], dtype=torch.float32)
