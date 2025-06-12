@@ -11,6 +11,13 @@ import sys
 
 repo_path = os.path.abspath("fa04_fin_NOXTRUN")
 sys.path.append(repo_path)
+
+from preprocessing.utils import preprocessing
+
+import pandas as pd
+df = pd.read_csv("/datasets/merged_result.csv", encoding="cp949")
+train, val, test = preprocessing(df, hogi= 3, multi_encoding= True)
+
 ```
 
 ##
