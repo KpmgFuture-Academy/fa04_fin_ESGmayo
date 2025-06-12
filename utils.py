@@ -41,13 +41,12 @@ def model_save(model, path):
 def model_load(path, pretraining= True, unfreeze_keys= None):
   model = torch.load(path, weights_only=False)
   
-    if pretraining:
-        for name, param in model.named_parameters():
-            param.requires_grad = False
-
-        if unfreeze_keys:
-            for name, param in model.named_parameters():
-                if any(key in name for key in unfreeze_keys):
-                    param.requires_grad = True
-
+  if pretraining:
+      for name, param in model.named_parameters():\
+          param.requires_grad = False
+        
+      if unfreeze_keys:
+          for name, param in model.named_parameters():
+              if any(key in name for key in unfreeze_keys):
+                  param.requires_grad = True
     return model
