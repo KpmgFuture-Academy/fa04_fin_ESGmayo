@@ -17,7 +17,7 @@ class OperationTimeEncoder(nn.Module):
         # x: [B, 24, T] → [B, h, T] → mean(T) → [B, h]
         return self.conv1d(x).mean(dim=2)
 
-  class TimeSeries(nn.Module):
+class TimeSeries(nn.Module):
     def __init__(self, in_ch, out_ch, hidden_size, multi_encoding=True):
         super().__init__()
         self.multi_encoding = multi_encoding
