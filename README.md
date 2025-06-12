@@ -1,7 +1,17 @@
 # 질소 산화물 발생량 예측 모델 
 https://ixorell.netlify.app/nox%20web/
 
+```python
 
+import os
+import sys
+
+!git clone https://github.com/KpmgFuture-Academy/fa04_fin_NOXTRUN
+
+
+repo_path = os.path.abspath("fa04_fin_NOXTRUN")
+sys.path.append(repo_path)
+```
 
 ##
 ![Firebase](https://img.shields.io/badge/Firebase-%23FFCA28.svg?style=flat&logo=firebase&logoColor=white)
