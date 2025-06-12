@@ -42,3 +42,21 @@ def training(
 
         print(f"[Epoch {epoch+1}] Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}")
     return total_training_loss, total_validation_loss
+
+
+def test(test_loader, model):
+    predict = []
+    target = []
+    model.eval()
+    with torch.no_grad():
+        for x, y in test_loader:
+            x, y = x.to(device), y.to(device)
+            preds = model(x)
+
+            predict.append(preds.cpu().numpy())
+            target.append(y.squeeze(-1) .cpu().numpy())
+
+    predict = np.concatenate(predict, axis=0).reshape(-1)
+    target = np.concatenate(target, axis=0)
+
+    return predict, target
