@@ -9,7 +9,7 @@ def training(
         train_loader,
         val_loader):
     
-                total_training_loss = []
+    total_training_loss = []
     total_validation_loss = []
 
     for epoch in range(num_epochs):
