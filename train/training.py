@@ -44,7 +44,7 @@ def training(
     return total_training_loss, total_validation_loss
 
 
-def test(test_loader, model):
+def test(test_loader, model, device):
     predict = []
     target = []
     model.eval()
