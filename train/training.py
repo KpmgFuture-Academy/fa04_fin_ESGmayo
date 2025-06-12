@@ -5,8 +5,11 @@ def training(
         optimizer,
         loss_fn,
         num_epochs,
-        model):
-    total_training_loss = []
+        model,
+        train_loader,
+        val_loader):
+    
+                total_training_loss = []
     total_validation_loss = []
 
     for epoch in range(num_epochs):
