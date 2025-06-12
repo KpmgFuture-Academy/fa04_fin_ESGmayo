@@ -15,8 +15,10 @@ sys.path.append(repo_path)
 from preprocessing.utils import preprocessing
 
 import pandas as pd
-df = pd.read_csv("/fa04_fin_NOXTRUN/datasets/merged_result.csv", encoding="cp949")
-train, val, test = preprocessing(df, hogi= 3, multi_encoding= True)
+df = pd.read_csv("/fa04_fin_NOXTRUN/datasets/영흥발전소.csv", encoding="cp949")
+
+hogi = 3 # 3~4호기 정수값 입력.
+train, val, test = preprocessing(df, hogi= hogi, multi_encoding= True)
 
 ```
 
