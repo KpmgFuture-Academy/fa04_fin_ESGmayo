@@ -100,6 +100,19 @@ class SlidingWindowDataset(torch.utils.data.Dataset):
         return len(self.x) - self.window_size + 1
 
     def __getitem__(self, idx):
-        x_window = self.x[idx : idx + self.window_size]       # 0~3행
-        y_target = self.y[idx + self.window_size - 1]         # 3행 (동일 종료점)
+        x_window = self.x[idx : idx + self.window_size]       # 0~n행
+        y_target = self.y[idx + self.window_size - 1]         # n행 (동일 종료점)
         return torch.tensor(x_window), torch.tensor([y_target], dtype=torch.float32)
+
+def torch_loader(train, val, test, batch_size, window_size):
+    
+    target = 'NOX'
+    features = [col for col in train.columns if col != target ]
+    
+    train_dataset = SlidingWindowDataset(train, features, target, window_size= window_size)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
+    val_dataset = SlidingWindowDataset(val, features, target, window_size= window_size)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+    test_dataset = SlidingWindowDataset(test, features, target, window_size= window_size)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    return train_loader, val_loader, test_loader
