@@ -43,7 +43,7 @@ def training(
         print(f"[Epoch {epoch+1}] Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}")
     return total_training_loss, total_validation_loss
 
-
+import numpy as np
 def test(test_loader, model, device):
     predict = []
     target = []
