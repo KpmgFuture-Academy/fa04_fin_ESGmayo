@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import numpy as np
 
 class OperationTimeEncoder(nn.Module):
     def __init__(self, in_ch):  # in_ch = 24
